@@ -1,6 +1,7 @@
 package simpl.typing;
 
 import simpl.parser.Symbol;
+import simpl.parser.Symbols;
 
 public abstract class TypeEnv {
 
@@ -16,9 +17,8 @@ public abstract class TypeEnv {
             public String toString() {
                 return x + ":" + t + ";" + E;
             }
-        };
+        }; 
     }
-
     public static final TypeEnv empty = new TypeEnv() {
         @Override
         public Type get(Symbol x) {
