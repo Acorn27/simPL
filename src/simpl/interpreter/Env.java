@@ -4,6 +4,7 @@ import simpl.parser.Symbol;
 
 public class Env {
 
+    // recursive-level definition
     private final Env E;
     private final Symbol x;
     private final Value v;
@@ -31,12 +32,18 @@ public class Env {
     }
 
     public Value get(Symbol y) {
-        // TODO
-        return null;
+        if (y == x) {
+            return v;
+        } else {
+            return E.get(y);
+        }
     }
 
     public Env clone() {
-        // TODO
-        return null;
+        return new Env(E, x, v);
+    }
+
+    public static Env of(Env E, Symbol x, Value v) {
+        return new Env(E, x, v);
     }
 }

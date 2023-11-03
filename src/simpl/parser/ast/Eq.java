@@ -17,7 +17,8 @@ public class Eq extends EqExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var v1 = l.eval(s);
+        var v2 = r.eval(s);
+        return new BoolValue(v1.equals(v2));
     }
 }

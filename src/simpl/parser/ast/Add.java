@@ -17,7 +17,14 @@ public class Add extends ArithExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var v1 = l.eval(s);
+        if (!(v1 instanceof IntValue)) {
+            throw new RuntimeError("Lhs is not an integer");
+        }
+        var v2 = r.eval(s);
+        if (!(v2 instanceof IntValue)) {
+            throw new RuntimeError("Rhs is not an integer");
+        }
+        return new IntValue(((IntValue) v1).n + ((IntValue) v2).n);
     }
 }

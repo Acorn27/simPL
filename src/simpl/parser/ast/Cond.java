@@ -26,13 +26,29 @@ public class Cond extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var predTr = e1.typecheck(E);
+        var subst = predTr.s;
+        var predTy = predTr.t;
+        subst = subst.compose(predTy.unify(Type.BOOL));
+
+        // check condition
+        var trueTr = e2.typecheck(E);
+        var falseTr = e3.typecheck(E);
+        subst = subst.compose(trueTr.s).compose(falseTr.s);
+        var trueTy = subst.apply(trueTr.t);
+        var falseTy = subst.apply(falseTr.t);
+        subst = subst.compose(trueTy.unify(falseTy));
+        trueTy = subst.apply(trueTy);
+
+        return TypeResult.of(subst, trueTy);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var predVal = e1.eval(s);
+        if (!(predVal instanceof BoolValue)) {
+            throw new RuntimeError("predicate is not a boolean");
+        }
+        return (((BoolValue) predVal).b) ? e2.eval(s) : e3.eval(s);
     }
 }

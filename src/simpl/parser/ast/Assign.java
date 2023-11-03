@@ -10,6 +10,7 @@ import simpl.typing.Type;
 import simpl.typing.TypeEnv;
 import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
+import simpl.typing.TypeVar;
 
 public class Assign extends BinaryExpr {
 
@@ -23,13 +24,35 @@ public class Assign extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var lhsTr = l.typecheck(E);
+        var subst = lhsTr.s;
+        Type cellTy;
+        if (lhsTr.t instanceof RefType) {
+            cellTy = ((RefType) lhsTr.t).t;
+        } else if (lhsTr.t instanceof TypeVar) {
+            var cellTv = new TypeVar(true);
+            subst = subst.compose(lhsTr.t.unify(new RefType(cellTv)));
+            cellTy = subst.apply(cellTv);
+        } else {
+            throw new TypeError("not a reference type");
+        }
+
+        var rhsTr = r.typecheck(E);
+        subst.compose(rhsTr.s);
+        subst = subst.compose(rhsTr.t.unify(cellTy));
+
+        return TypeResult.of(subst, Type.UNIT);
+
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var refVal = l.eval(s);
+        if (!(refVal instanceof RefValue)) {
+            throw new RuntimeError("lhs not a reference");
+        }
+        var assignVal = r.eval(s);
+        s.M.write(((RefValue) refVal).p, assignVal);
+        return Value.UNIT;
     }
 }

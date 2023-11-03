@@ -10,13 +10,12 @@ public class ConsValue extends Value {
     }
 
     public String toString() {
-        // TODO
-        return null;
+        return v1 + "::" + v2;
     }
 
     @Override
     public boolean equals(Object other) {
-        // TODO
-        return false;
+        return (other instanceof ConsValue)
+                && (this.v1.equals(((ConsValue) other).v1) && (this.v2.equals(((ConsValue) other).v2)));
     }
 }

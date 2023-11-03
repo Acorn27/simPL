@@ -16,7 +16,6 @@ public class InitialState extends State {
     }
 
     private static Env initialEnv(Env E) {
-        // TODO
-        return null;
+        return Env.empty;
     }
 }

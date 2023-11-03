@@ -24,13 +24,24 @@ public class Deref extends UnaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var refTr = e.typecheck(E);
+        if (refTr.t instanceof RefType) {
+            return TypeResult.of(refTr.s, ((RefType) refTr.t).t);
+        } else if (refTr.t instanceof TypeVar) {
+            var cellTv = new TypeVar(true);
+            var subst = refTr.s.compose(refTr.t.unify(new RefType(cellTv)));
+            subst.apply(cellTv);
+            return TypeResult.of(subst, cellTv);
+        }
+        throw new TypeError("not a reference");
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var refVal = e.eval(s);
+        if (!(refVal instanceof RefValue)) {
+            throw new RuntimeError("not a reference"));
+        }
+        return s.M.read(((RefValue)refVal).p);
     }
 }
