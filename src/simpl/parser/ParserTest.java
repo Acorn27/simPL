@@ -17,7 +17,11 @@ public class ParserTest {
     }
 
     public static void main(String[] argv) {
+<<<<<<< HEAD
         parse("doc/examples/check.spl");
+=======
+        parse("doc/examples/plus.spl");
+>>>>>>> 497286e4cbcc092f733fd0d1045c05064b490a62
         // parse("doc/examples/factorial.spl");
         // parse("doc/examples/gcd1.spl");
         // parse("doc/examples/gcd2.spl");

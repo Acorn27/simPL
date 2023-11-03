@@ -13,9 +13,11 @@ public abstract class Substitution {
     }
 
     private static final class Replace extends Substitution {
+        
         private TypeVar a;
         private Type t;
 
+        // constructor
         public Replace(TypeVar a, Type t) {
             this.a = a;
             this.t = t;
