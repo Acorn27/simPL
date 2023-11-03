@@ -7,7 +7,14 @@ public class DefaultTypeEnv extends TypeEnv {
     private TypeEnv E;
 
     public DefaultTypeEnv() {
-        // TODO
+        // create a default type enviroment as the starting point
+        E = new TypeEnv() {
+            @Override
+            public Type get(Symbol x) {
+                return null;
+            }
+        };
+
     }
 
     @Override
