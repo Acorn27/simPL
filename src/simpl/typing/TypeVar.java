@@ -44,7 +44,7 @@ public class TypeVar extends Type {
 
     @Override
     public Type replace(TypeVar a, Type t) {
-        if (contains(a)) {
+        if (this.contains(a)) {
             return t;
         } else {
             return this;
