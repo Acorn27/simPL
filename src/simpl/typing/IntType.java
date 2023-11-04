@@ -17,7 +17,7 @@ final class IntType extends Type {
         } else if (t instanceof IntType) {
             return Substitution.IDENTITY;
         }
-        throw new TypeMismatchError();
+        throw new TypeError("Int Type Error");
     }
 
     @Override

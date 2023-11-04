@@ -17,7 +17,7 @@ final class BoolType extends Type {
         } else if (t instanceof BoolType) {
             return Substitution.IDENTITY;
         }
-        throw new TypeMismatchError();
+        throw new TypeError("Bool Type Error");
     }
 
     @Override

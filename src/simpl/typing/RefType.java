@@ -20,7 +20,7 @@ public final class RefType extends Type {
         } else if (t instanceof RefType) {
             return this.t.unify(((RefType) t).t);
         }
-        throw new TypeError("Type Ref Error");
+        throw new TypeError("Ref Type Error");
     }
 
     @Override

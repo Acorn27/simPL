@@ -23,9 +23,8 @@ public final class ArrowType extends Type {
             Substitution s2 = this.t2.unify(((ArrowType) t).t2);
             return s1.compose(s2);
         } else {
-            throw new TypeError("Function type missmatch");
+            throw new TypeError("Arrow type missmatch");
         }
-
     }
 
     @Override
