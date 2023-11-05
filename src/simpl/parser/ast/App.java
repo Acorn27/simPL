@@ -27,22 +27,32 @@ public class App extends BinaryExpr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        // type check
-        var fnTr = this.l.typecheck(E);
-        var argTr = this.r.typecheck(E);
-        var subst = fnTr.s.compose(argTr.s);
-        var funTy = subst.apply(fnTr.t);
-        var argTy = subst.apply(argTr.t);
+        // type check e1 and e2
+        var e1Tr = this.l.typecheck(E);
+        var e2Tr = this.r.typecheck(E);
+        // produce combined constraint to re-type check e1
+        var subst = e1Tr.s.compose(e2Tr.s);
+        // produce returned type yield using by applied combined substitution on e1
+        var e1Ty = subst.apply(e1Tr.t);
+        // It mayt not be neccesary, but keep it for now
+        var e2Ty = subst.apply(e2Tr.t);
 
-        // infer type result
-        if (funTy instanceof ArrowType) {
-            var paramTy = ((ArrowType) funTy).t1;
-            subst = subst.compose(paramTy.unify(argTy));
-            var resTy = subst.apply(((ArrowType) funTy).t2);
+        // if e1 type already an arrow type
+        if (e1Ty instanceof ArrowType) {
+            // get parameter type of e1 and unified it with type of e2
+            var paramTy = ((ArrowType) e1Ty).t1;
+            // produce new substitution
+            subst = subst.compose(paramTy.unify(e2Ty));
+            // retrieve final type by apply new substution on body of the function
+            var resTy = subst.apply(((ArrowType) e1Ty).t2);
             return TypeResult.of(subst, resTy);
-        } else if (funTy instanceof TypeVar) {
+            // if e1 type is an typeVar, shape it to an arrow type
+        } else if (e1Ty instanceof TypeVar) {
+            // create new return type
             var resTv = new TypeVar(true);
-            subst = subst.compose(funTy.unify(new ArrowType(argTy, resTv)));
+            // e1Ty = e2Ty -> ResTv
+            subst = subst.compose(e1Ty.unify(new ArrowType(e2Ty, resTv)));
+            // produce type yield of resTV
             var resTy = subst.apply(resTv);
             return TypeResult.of(subst, resTy);
         }
@@ -51,12 +61,17 @@ public class App extends BinaryExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
+        // evaluate left hand side and check if it is a function value
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof FunValue)) {
             throw new RuntimeError("Lhs can not be evaluated to a function value");
         }
+        // type cast to func value
         var fnVal = (FunValue) lhsVal;
+        // evaluate argument
         var argVal = r.eval(s);
+
+        // evaluate function body in a new environmet
         return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, argVal), s.M, s.p));
     }
 }

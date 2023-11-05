@@ -1,0 +1,2 @@
+max function applied to int return typevar
+1 == true does not return type error
