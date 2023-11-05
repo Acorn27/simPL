@@ -26,21 +26,28 @@ public class Cond extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        var predTr = e1.typecheck(E);
-        var subst = predTr.s.compose(predTr.t.unify(Type.BOOL));
 
-        // check condition: we don't check instance of BOOL since there is no public
-        // access
-        // INT == BOOL error will be checked latter on
-        var trueTr = e2.typecheck(E);
-        var falseTr = e3.typecheck(E);
-        subst = subst.compose(trueTr.s).compose(falseTr.s);
-        var trueTy = subst.apply(trueTr.t);
-        var falseTy = subst.apply(falseTr.t);
-        subst = subst.compose(trueTy.unify(falseTy));
-        trueTy = subst.apply(trueTy);
+        // type check and unify e1 to BOOL
+        var e1Tr = e1.typecheck(E);
+        var subst = e1Tr.s.compose(e1Tr.t.unify(Type.BOOL));
 
-        return TypeResult.of(subst, trueTy);
+        // create a new environment to type check e2 and e3
+        var newEnv = subst.compose(E);
+
+        // type check e2 and e3 under new environment
+        var e2Tr = e2.typecheck(newEnv);
+        var e3Tr = e3.typecheck(newEnv);
+
+        // comnpose substitution and re-apply to e2 and e3
+        subst = subst.compose(e2Tr.s).compose(e3Tr.s);
+        var e2Ty = subst.apply(e2Tr.t);
+        var e3Ty = subst.apply(e3Tr.t);
+
+        // unify e2 and e3 to the same type
+        subst = subst.compose(e2Ty.unify(e3Ty));
+        e2Ty = subst.apply(e2Ty);
+
+        return TypeResult.of(subst, e2Ty);
     }
 
     @Override

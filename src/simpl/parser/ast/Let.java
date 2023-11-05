@@ -29,19 +29,20 @@ public class Let extends Expr {
         // type check e1
         var e1Tr = e1.typecheck(E);
 
-        // type check e2 under the returning type of e1
+        // type check e2 under e1 of type e1Tr.t
         var funTr = e2.typecheck(TypeEnv.of(E, x, e1Tr.t));
 
         // combine constraint
         var subst = e1Tr.s.compose(funTr.s);
-        return TypeResult.of(subst, funTr.t);
+        var funTy = subst.apply(funTr.t);
+        return TypeResult.of(subst, funTy);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
         // evaluate e1
-        var e1Val = e1.eval(s);
-        // evaluate e2 using e1Val
-        return e2.eval(State.of(Env.of(s.E, x, e1Val), s.M, s.p));
+        var v1 = e1.eval(s);
+        // evaluate e2
+        return e2.eval(State.of(Env.of(s.E, x, v1), s.M, s.p));
     }
 }

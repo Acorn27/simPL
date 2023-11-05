@@ -32,7 +32,7 @@ public class App extends BinaryExpr {
         var e2Tr = this.r.typecheck(E);
         // produce combined constraint to re-type check e1
         var subst = e1Tr.s.compose(e2Tr.s);
-        // produce returned type yield using by applied combined substitution on e1
+        // produce returned type yield using by apply combined substitution on e1
         var e1Ty = subst.apply(e1Tr.t);
         // It mayt not be neccesary, but keep it for now
         var e2Ty = subst.apply(e2Tr.t);
