@@ -24,13 +24,24 @@ public class Name extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var ty = E.get(x);
+        if (ty == null) {
+            throw new TypeError(String.format("Type of symbol %s not found", x));
+        }
+        // emtpy environment + type ty
+        return TypeResult.of(ty);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var val = s.E.get(x);
+        if (val == null) {
+            throw new RuntimeError(String.format("Value of symbol %s not found", x));
+        }
+        if (val instanceof RecValue) {
+            var rec = new Rec(x, ((RecValue) val).e);
+            return rec.eval(State.of(((RecValue) val).E, s.M, s.p));
+        }
+        return val;
     }
 }

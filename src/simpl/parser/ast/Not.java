@@ -22,13 +22,17 @@ public class Not extends UnaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var expTr = e.typecheck(E);
+        var subst = expTr.s.compose(expTr.t.unify(Type.BOOL));
+        return TypeResult.of(subst, Type.BOOL);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var val = e.eval(s);
+        if (!(val instanceof BoolValue)) {
+            throw new RuntimeError("not a boolean value");
+        }
+        return new BoolValue(!((BoolValue) val).b);
     }
 }

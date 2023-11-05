@@ -26,10 +26,12 @@ public class Deref extends UnaryExpr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var refTr = e.typecheck(E);
         if (refTr.t instanceof RefType) {
+            // return type that reftype reference to
             return TypeResult.of(refTr.s, ((RefType) refTr.t).t);
         } else if (refTr.t instanceof TypeVar) {
             var cellTv = new TypeVar(true);
-            var subst = refTr.s.compose(refTr.t.unify(new RefType(cellTv)));
+            var subst = refTr.s;
+            subst = subst.compose(refTr.t.unify(new RefType(cellTv)));
             subst.apply(cellTv);
             return TypeResult.of(subst, cellTv);
         }
@@ -40,8 +42,8 @@ public class Deref extends UnaryExpr {
     public Value eval(State s) throws RuntimeError {
         var refVal = e.eval(s);
         if (!(refVal instanceof RefValue)) {
-            throw new RuntimeError("not a reference"));
+            throw new RuntimeError("not a reference");
         }
-        return s.M.read(((RefValue)refVal).p);
+        return s.M.read(((RefValue) refVal).p);
     }
 }

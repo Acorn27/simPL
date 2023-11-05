@@ -13,4 +13,10 @@ public class Mem extends HashMap<Integer, Value> {
     public Value read(int ptr) {
         return get(ptr);
     }
+
+    public int alloc(State s) {
+        var ptr = s.p.get();
+        s.p.set(ptr + 1);
+        return ptr;
+    }
 }

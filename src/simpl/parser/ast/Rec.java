@@ -29,13 +29,23 @@ public class Rec extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+
+        // define new type var for parameter
+        var recTv = new TypeVar(false);
+
+        // infer type of body under new enviroment
+        var resTr = e.typecheck(TypeEnv.of(E, x, recTv));
+
+        // adding constraint
+        var subst = resTr.s.compose(recTv.unify(resTr.t));
+
+        // infer type
+        var resTy = subst.apply(resTr.t);
+        return TypeResult.of(subst, resTy);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        return e.eval(State.of(Env.of(s.E, x, new RecValue(s.E, x, e)), s.M, s.p));
     }
 }

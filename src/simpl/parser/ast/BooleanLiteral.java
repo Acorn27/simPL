@@ -23,6 +23,7 @@ public class BooleanLiteral extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
+        // return type environment compose of IDENTITY and type BOOL
         return TypeResult.of(Type.BOOL);
     }
 

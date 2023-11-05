@@ -17,13 +17,12 @@ public class Nil extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var elementTv = new TypeVar(true);
+        return TypeResult.of(new ListType(elementTv));
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        return Value.NIL;
     }
 }

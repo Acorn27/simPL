@@ -53,7 +53,7 @@ public class App extends BinaryExpr {
     public Value eval(State s) throws RuntimeError {
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof FunValue)) {
-            throw new RuntimeError("Lhs is not a function value");
+            throw new RuntimeError("Lhs can not be evaluated to a function value");
         }
         var fnVal = (FunValue) lhsVal;
         var argVal = r.eval(s);

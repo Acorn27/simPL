@@ -17,7 +17,14 @@ public class Mul extends ArithExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var lhsVal = l.eval(s);
+        if (!(lhsVal instanceof IntValue)) {
+            throw new RuntimeError("lhs is not an integer");
+        }
+        var rhsVal = r.eval(s);
+        if (!(rhsVal instanceof IntValue)) {
+            throw new RuntimeError("rhs is not an integer");
+        }
+        return new IntValue(((IntValue) lhsVal).n * ((IntValue) rhsVal).n);
     }
 }

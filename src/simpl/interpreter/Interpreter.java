@@ -18,17 +18,13 @@ public class Interpreter {
             Expr program = (Expr) parseTree.value;
             System.out.println(program.typecheck(new DefaultTypeEnv()).t);
             System.out.println(program.eval(new InitialState()));
-        }
-        catch (SyntaxError e) {
+        } catch (SyntaxError e) {
             System.out.println("syntax error");
-        }
-        catch (TypeError e) {
+        } catch (TypeError e) {
             System.out.println("type error");
-        }
-        catch (RuntimeError e) {
+        } catch (RuntimeError e) {
             System.out.println("runtime error");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace(System.err);
         }
     }
@@ -41,18 +37,18 @@ public class Interpreter {
 
     public static void main(String[] args) {
         interpret("doc/examples/plus.spl");
-        // interpret("doc/examples/factorial.spl");
-        // interpret("doc/examples/gcd1.spl");
-        // interpret("doc/examples/gcd2.spl");
-        // interpret("doc/examples/max.spl");
-        // interpret("doc/examples/sum.spl");
-        // interpret("doc/examples/map.spl");
-        // interpret("doc/examples/pcf.sum.spl");
-        // interpret("doc/examples/pcf.even.spl");
-        // interpret("doc/examples/pcf.minus.spl");
-        // interpret("doc/examples/pcf.factorial.spl");
-        // interpret("doc/examples/pcf.fibonacci.spl");
-        // interpret("doc/examples/pcf.twice.spl");
-        // interpret("doc/examples/pcf.lists.spl");
+        interpret("doc/examples/factorial.spl");
+        interpret("doc/examples/gcd1.spl");
+        interpret("doc/examples/gcd2.spl");
+        interpret("doc/examples/max.spl");
+        interpret("doc/examples/sum.spl");
+        interpret("doc/examples/map.spl");
+        interpret("doc/examples/pcf.sum.spl");
+        interpret("doc/examples/pcf.even.spl");
+        interpret("doc/examples/pcf.minus.spl");
+        interpret("doc/examples/pcf.factorial.spl");
+        interpret("doc/examples/pcf.fibonacci.spl");
+        interpret("doc/examples/pcf.twice.spl");
+        interpret("doc/examples/pcf.lists.spl");
     }
 }

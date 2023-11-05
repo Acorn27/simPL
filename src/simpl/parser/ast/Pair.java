@@ -21,13 +21,18 @@ public class Pair extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var lhsTr = l.typecheck(E);
+        var rhsTr = r.typecheck(E);
+        var subst = lhsTr.s.compose(rhsTr.s);
+        var lhsTy = subst.apply(lhsTr.t);
+        var rhsTy = subst.apply(rhsTr.t);
+        return TypeResult.of(subst, new PairType(lhsTy, rhsTy));
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var lhsVal = l.eval(s);
+        var rhsVal = r.eval(s);
+        return new PairValue(lhsVal, rhsVal);
     }
 }

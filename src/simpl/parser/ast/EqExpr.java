@@ -18,6 +18,7 @@ public abstract class EqExpr extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
+
         var lhsTr = l.typecheck(E);
         var rhsTr = l.typecheck(E);
         var subst = lhsTr.s.compose(rhsTr.s);

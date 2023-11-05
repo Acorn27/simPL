@@ -25,13 +25,28 @@ public class Loop extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+
+        // assume that pred is bool
+        var predTr = e1.typecheck(E);
+        var subst = predTr.s.compose(predTr.t.unify(Type.BOOL));
+
+        var bodyTr = e2.typecheck(E);
+        subst = subst.compose(bodyTr.s);
+        subst = subst.compose(bodyTr.t.unify(Type.UNIT));
+
+        return TypeResult.of(subst, Type.UNIT);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var predVal = e1.eval(s);
+        if (!(predVal instanceof BoolValue)) {
+            throw new RuntimeError("Predicate can not evaluated to a bool value");
+        }
+        if (((BoolValue) predVal).b) {
+            return new Seq(e2, this).eval(s);
+        } else {
+            return Value.UNIT;
+        }
     }
 }

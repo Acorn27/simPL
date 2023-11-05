@@ -26,13 +26,16 @@ public class Let extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        var paramTr = e1.typecheck(E);
+        var funTr = e2.typecheck(TypeEnv.of(E, x, paramTr.t));
+        var subst = paramTr.s.compose(funTr.s);
+
+        return TypeResult.of(subst, funTr.t);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        var v1 = e1.eval(s);
+        return e2.eval(State.of(Env.of(s.E, x, v1), s.M, s.p));
     }
 }

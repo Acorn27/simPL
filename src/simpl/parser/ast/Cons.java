@@ -23,12 +23,14 @@ public class Cons extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
+
+        // boiler plate
         var elemTr = l.typecheck(E);
-        var elemTy = elemTr.t;
-        // unify list type with type of list of element
         var listTr = r.typecheck(E);
         var subst = listTr.s.compose(elemTr.s);
         var listTy = subst.apply(listTr.t);
+        var elemTy = subst.apply(elemTr.t);
+
         subst = subst.compose(listTy.unify(new ListType(elemTy)));
         listTy = subst.apply(listTy);
         return TypeResult.of(subst, listTy);

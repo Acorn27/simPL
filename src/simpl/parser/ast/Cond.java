@@ -27,11 +27,11 @@ public class Cond extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var predTr = e1.typecheck(E);
-        var subst = predTr.s;
-        var predTy = predTr.t;
-        subst = subst.compose(predTy.unify(Type.BOOL));
+        var subst = predTr.s.compose(predTr.t.unify(Type.BOOL));
 
-        // check condition
+        // check condition: we don't check instance of BOOL since there is no public
+        // access
+        // INT == BOOL error will be checked latter on
         var trueTr = e2.typecheck(E);
         var falseTr = e3.typecheck(E);
         subst = subst.compose(trueTr.s).compose(falseTr.s);
