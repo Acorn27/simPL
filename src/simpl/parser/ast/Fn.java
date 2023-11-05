@@ -34,11 +34,10 @@ public class Fn extends Expr {
 
         // infer function's type in new enviroment
         var funTr = e.typecheck(TypeEnv.of(E, x, paramTv));
+
         var paramTy = funTr.s.apply(paramTv);
 
-        var funTy = funTr.s.apply(funTr.t);
-
-        return TypeResult.of(funTr.s, new ArrowType(paramTy, funTy));
+        return TypeResult.of(funTr.s, new ArrowType(paramTy, funTr.t));
     }
 
     @Override

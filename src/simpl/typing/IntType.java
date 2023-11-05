@@ -28,7 +28,7 @@ final class IntType extends Type {
     @Override
     public Type replace(TypeVar a, Type t) {
         // note
-        return this;
+        return Type.INT;
     }
 
     public String toString() {

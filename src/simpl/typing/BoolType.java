@@ -27,7 +27,7 @@ final class BoolType extends Type {
 
     @Override
     public Type replace(TypeVar a, Type t) {
-        return this;
+        return Type.BOOL;
     }
 
     public String toString() {
