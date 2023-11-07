@@ -36,10 +36,6 @@ public abstract class Substitution {
             this.g = g;
         }
 
-        // change order of apply to g, then f
-        // intituition is we want to keep the application of the deeper level of the
-        // tree when overwritting
-        // because g is more specific than f
         public Type apply(Type t) {
             return g.apply(f.apply(t));
         }
