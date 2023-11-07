@@ -21,12 +21,10 @@ public class TypeVar extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeCircularityError {
-        if (t instanceof TypeVar) {
-            if (t.contains(this)) {
-                throw new TypeCircularityError();
-            } else {
-                return Substitution.IDENTITY;
-            }
+        if ((t instanceof TypeVar) && (((TypeVar) t).name == name)) {
+            return Substitution.IDENTITY;
+        } else if ((t instanceof TypeVar) && (((TypeVar) t).contains(this))) {
+            throw new TypeCircularityError();
         } else {
             return Substitution.of(this, t);
         }
@@ -39,7 +37,7 @@ public class TypeVar extends Type {
 
     @Override
     public boolean contains(TypeVar tv) {
-        return this.toString() == tv.toString();
+        return name.equals(tv.name);
     }
 
     @Override
@@ -51,4 +49,5 @@ public class TypeVar extends Type {
         }
 
     }
+
 }
