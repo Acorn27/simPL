@@ -6,15 +6,10 @@ public class DefaultTypeEnv extends TypeEnv {
 
     private TypeEnv E;
 
+    // constructor
     public DefaultTypeEnv() {
-        // create a default type enviroment as the starting point
-        E = new TypeEnv() {
-            @Override
-            public Type get(Symbol x) {
-                return null;
-            }
-        };
-
+        // create an empt type enviroment as the starting point
+        E = TypeEnv.empty;
     }
 
     @Override
