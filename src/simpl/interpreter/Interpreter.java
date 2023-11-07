@@ -16,10 +16,13 @@ public class Interpreter {
             Parser parser = new Parser(inp);
             java_cup.runtime.Symbol parseTree = parser.parse();
             Expr program = (Expr) parseTree.value;
-            // print out type of the output
+
+            // print out type of the evaluated expression
             System.out.println(program.typecheck(new DefaultTypeEnv()).t);
-            // print out value of program's expression
+
+            // print out value of evaluated expression
             System.out.println(program.eval(new InitialState()));
+
         } catch (SyntaxError e) {
             System.out.println("syntax error");
         } catch (TypeError e) {
