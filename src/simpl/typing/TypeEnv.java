@@ -5,10 +5,11 @@ import simpl.parser.Symbols;
 
 public abstract class TypeEnv {
 
-    // mapping between symbol -> its type
+    // mapping between symbol and its type
     public abstract Type get(Symbol x);
 
-    // create a new type enviroment bashed on x:t
+    // enlarge current TypeEnv by adding a new mapping rule between Symbol X and
+    // Type t
     public static TypeEnv of(final TypeEnv E, final Symbol x, final Type t) {
         return new TypeEnv() {
             public Type get(Symbol x1) {
