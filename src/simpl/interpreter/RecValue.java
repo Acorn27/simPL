@@ -3,6 +3,7 @@ package simpl.interpreter;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
 
+// simiar to func but rec
 public class RecValue extends Value {
 
     public final Env E;

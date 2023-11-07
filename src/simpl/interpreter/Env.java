@@ -2,9 +2,9 @@ package simpl.interpreter;
 
 import simpl.parser.Symbol;
 
+// similar to typeEnv but for value
 public class Env {
 
-    // recursive-level definition
     private final Env E;
     private final Symbol x;
     private final Value v;

@@ -24,12 +24,20 @@ public class Assign extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
+
+        // type check left hand side and capture its subst rule
         var lhsTr = l.typecheck(E);
         var subst = lhsTr.s;
+
+        // define outside to use a global var of local fun
         Type cellTy;
+
+        // if this is RefType then capture its reference type to unify with rhs
         if (lhsTr.t instanceof RefType) {
             cellTy = ((RefType) lhsTr.t).t;
+            // if this is TypeVar then unify it to a Ref type
         } else if (lhsTr.t instanceof TypeVar) {
+            // generate type scheme
             var cellTv = new TypeVar(true);
             subst = subst.compose(lhsTr.t.unify(new RefType(cellTv)));
             cellTy = subst.apply(cellTv);
@@ -37,10 +45,14 @@ public class Assign extends BinaryExpr {
             throw new TypeError("not a reference type");
         }
 
+        // type check rhs
         var rhsTr = r.typecheck(E);
         subst.compose(rhsTr.s);
+
+        // unify cellTy with rhs type
         subst = subst.compose(rhsTr.t.unify(cellTy));
 
+        // return type is unit
         return TypeResult.of(subst, Type.UNIT);
 
     }

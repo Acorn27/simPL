@@ -34,7 +34,7 @@ public class App extends BinaryExpr {
         var subst = e1Tr.s.compose(e2Tr.s);
         // produce returned type yield using by apply combined substitution on e1
         var e1Ty = subst.apply(e1Tr.t);
-        // It mayt not be neccesary, but keep it for now
+        // It may not be neccesary, but keep it for now
         var e2Ty = subst.apply(e2Tr.t);
 
         // if e1 type already an arrow type
@@ -68,7 +68,7 @@ public class App extends BinaryExpr {
         }
         // type cast to func value
         var fnVal = (FunValue) lhsVal;
-        // evaluate argument
+        // then, evaluate argument
         var argVal = r.eval(s);
 
         // evaluate function body in a new environmet
