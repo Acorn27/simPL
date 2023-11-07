@@ -36,6 +36,9 @@ public abstract class Substitution {
             this.g = g;
         }
 
+        // Does the order matter? No, because applying a specific type to a type
+        // variable
+        // will be handled by the unify method implementation in every type.
         public Type apply(Type t) {
             return g.apply(f.apply(t));
         }
@@ -43,14 +46,17 @@ public abstract class Substitution {
 
     public static final Substitution IDENTITY = new Identity();
 
+    // create a single substitution rule
     public static Substitution of(TypeVar a, Type t) {
         return new Replace(a, t);
     }
 
+    // enlarge substitution system
     public Substitution compose(Substitution inner) {
         return new Compose(this, inner);
     }
 
+    // apply current substitution rules on everything return by Type Environment
     public TypeEnv compose(final TypeEnv E) {
         return new TypeEnv() {
             public Type get(Symbol x) {

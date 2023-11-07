@@ -12,22 +12,24 @@ final class IntType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify constructor type with type var
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof IntType) {
             return Substitution.IDENTITY;
         }
-        throw new TypeError("Int Type Error");
+        throw new TypeMismatchError();
     }
 
     @Override
     public boolean contains(TypeVar tv) {
+        // alway false
         return false;
     }
 
     @Override
     public Type replace(TypeVar a, Type t) {
-        // note
+        // no replacement on constructor type
         return Type.INT;
     }
 

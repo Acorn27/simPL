@@ -16,6 +16,7 @@ public final class PairType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify with a less specific type
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof PairType) {
@@ -23,16 +24,18 @@ public final class PairType extends Type {
             Substitution s2 = this.t2.unify(((PairType) t).t2);
             return s1.compose(s2);
         }
-        throw new TypeError("Pair Type Error");
+        throw new TypeMismatchError();
     }
 
     @Override
     public boolean contains(TypeVar tv) {
+        // either contains?
         return (this.t1.contains(tv) || (this.t2.contains(tv)));
     }
 
     @Override
     public Type replace(TypeVar a, Type t) {
+        // replace both
         return new PairType(this.t1.replace(a, t), this.t2.replace(a, t));
     }
 

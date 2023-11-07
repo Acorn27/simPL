@@ -2,6 +2,7 @@ package simpl.typing;
 
 public class TypeResult {
 
+    // consist of substitution rule and type t
     public Substitution s;
     public Type t;
 

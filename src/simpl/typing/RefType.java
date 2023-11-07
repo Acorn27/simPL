@@ -15,17 +15,17 @@ public final class RefType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify with a less specific type
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof RefType) {
             return this.t.unify(((RefType) t).t);
         }
-        throw new TypeError("Ref Type Error");
+        throw new TypeMismatchError();
     }
 
     @Override
     public boolean contains(TypeVar tv) {
-        // note
         return this.t.contains(tv);
     }
 

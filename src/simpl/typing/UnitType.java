@@ -12,10 +12,10 @@ final class UnitType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify with less specific type
         if (t instanceof TypeVar) {
             return t.unify(this);
-        }
-        if (t instanceof UnitType) {
+        } else if (t instanceof UnitType) {
             return Substitution.IDENTITY;
         }
         throw new TypeMismatchError();

@@ -15,12 +15,14 @@ public final class ListType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify with a less specific type
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof ListType) {
+            // unify list's element type
             return this.t.unify(((ListType) t).t);
         }
-        throw new TypeError("List Type Error");
+        throw new TypeMismatchError();
     }
 
     @Override

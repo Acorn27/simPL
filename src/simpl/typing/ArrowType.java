@@ -16,6 +16,7 @@ public final class ArrowType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
+        // don't unify constructor type with type var
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof ArrowType) {
@@ -23,17 +24,19 @@ public final class ArrowType extends Type {
             Substitution s2 = this.t2.unify(((ArrowType) t).t2);
             return s1.compose(s2);
         } else {
-            throw new TypeError("Arrow type missmatch");
+            throw new TypeMismatchError();
         }
     }
 
     @Override
     public boolean contains(TypeVar tv) {
+        // either t1 or t2 contains?
         return (this.t1.contains(tv) || (this.t2.contains(tv)));
     }
 
     @Override
     public Type replace(TypeVar a, Type t) {
+        // replace in both
         return new ArrowType(this.t1.replace(a, t), this.t2.replace(a, t));
     }
 
