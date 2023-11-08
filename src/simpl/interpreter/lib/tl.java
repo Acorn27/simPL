@@ -11,11 +11,28 @@ import simpl.parser.ast.Expr;
 import simpl.typing.TypeEnv;
 import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
+import simpl.typing.TypeVar;
 
 public class tl extends FunValue {
 
     public tl() {
-        // TODO
-        super(null, null, null);
+        super(Env.empty, Symbol.symbol("x"), new Expr() {
+
+            @Override
+            public TypeResult typecheck(TypeEnv E) throws TypeError {
+
+                // can't type check alone since we need argument type
+                return TypeResult.of(new TypeVar(true));
+            }
+
+            public Value eval(State s) throws RuntimeError {
+
+                var paramValue = s.E.get(Symbol.symbol("x"));
+                if (!(paramValue instanceof ConsValue)) {
+                    throw new RuntimeError("Parameter not a list value");
+                }
+                return ((ConsValue) paramValue).v2;
+            }
+        });
     }
 }

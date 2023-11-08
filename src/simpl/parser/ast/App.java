@@ -5,6 +5,7 @@ import simpl.interpreter.FunValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
 import simpl.interpreter.Value;
+import simpl.interpreter.pcf.iszero;
 import simpl.parser.Symbol;
 import simpl.typing.ArrowType;
 import simpl.typing.Substitution;
@@ -30,6 +31,7 @@ public class App extends BinaryExpr {
         // type check e1 and e2
         var e1Tr = this.l.typecheck(E);
         var e2Tr = this.r.typecheck(E);
+
         // produce combined constraint to re-type check e1
         var subst = e1Tr.s.compose(e2Tr.s);
         // produce returned type yield using by apply combined substitution on e1
@@ -56,6 +58,8 @@ public class App extends BinaryExpr {
             var resTy = subst.apply(resTv);
             return TypeResult.of(subst, resTy);
         }
+
+        // debug
         throw new TypeError("Lhs is not a function");
     }
 

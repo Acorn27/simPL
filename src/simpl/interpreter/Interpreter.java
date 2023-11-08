@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import simpl.parser.Parser;
 import simpl.parser.SyntaxError;
+import simpl.parser.ast.App;
 import simpl.parser.ast.Expr;
 import simpl.typing.DefaultTypeEnv;
 import simpl.typing.TypeError;
@@ -54,8 +55,8 @@ public class Interpreter {
         // interpret("doc/examples/pcf.minus.spl");
         // interpret("doc/examples/pcf.factorial.spl");
         // interpret("doc/examples/pcf.fibonacci.spl");
-        // interpret("doc/examples/pcf.twice.spl");
+        interpret("doc/examples/pcf.twice.spl");
         // interpret("doc/examples/pcf.lists.spl");
-        interpret("doc/examples/true.spl");
+        // interpret("doc/examples/true.spl");
     }
 }
