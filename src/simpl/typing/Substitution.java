@@ -17,7 +17,6 @@ public abstract class Substitution {
         private TypeVar a;
         private Type t;
 
-        // constructor
         public Replace(TypeVar a, Type t) {
             this.a = a;
             this.t = t;
@@ -36,11 +35,8 @@ public abstract class Substitution {
             this.g = g;
         }
 
-        // Does the order matter? No, because applying a specific type to a type
-        // variable
-        // will be handled by the unify method implementation in every type.
         public Type apply(Type t) {
-            return g.apply(f.apply(t));
+            return f.apply(g.apply(t));
         }
     }
 

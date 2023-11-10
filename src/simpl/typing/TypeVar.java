@@ -21,10 +21,8 @@ public class TypeVar extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeCircularityError {
-        // return identity substitution if unify to the same type
         if ((t instanceof TypeVar) && (((TypeVar) t).name == name)) {
             return Substitution.IDENTITY;
-            // type circularity error
         } else if ((t instanceof TypeVar) && (((TypeVar) t).contains(this))) {
             throw new TypeCircularityError();
         } else {
@@ -44,13 +42,11 @@ public class TypeVar extends Type {
 
     @Override
     public Type replace(TypeVar a, Type t) {
-        // self explain
         if (this.contains(a)) {
             return t;
         } else {
             return this;
         }
-
     }
 
 }

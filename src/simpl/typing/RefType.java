@@ -15,7 +15,7 @@ public final class RefType extends Type {
 
     @Override
     public Substitution unify(Type t) throws TypeError {
-        // don't unify with a less specific type
+        // s = a unification rule
         if (t instanceof TypeVar) {
             return t.unify(this);
         } else if (t instanceof RefType) {

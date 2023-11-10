@@ -18,11 +18,11 @@ public class DefaultTypeEnv extends TypeEnv {
                 } else if (x.toString() == ("fst") || x.toString() == ("snd")) {
                     var e1Ty = new TypeVar(true);
                     var e2Ty = new TypeVar(true);
-                    var pairType = new PairType(e1Ty, e2Ty);
+                    var pairTy = new PairType(e1Ty, e2Ty);
                     if (x.toString() == "fst") {
-                        return new ArrowType(pairType, e1Ty);
+                        return new ArrowType(pairTy, e1Ty);
                     } else {
-                        return new ArrowType(pairType, e2Ty);
+                        return new ArrowType(pairTy, e2Ty);
                     }
                 } else if (x.toString() == "hd") {
                     var elemTy = new TypeVar(true);
