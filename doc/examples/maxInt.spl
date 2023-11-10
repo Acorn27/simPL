@@ -1,3 +1,1 @@
-let id = fn x => x 
-in (id 10, id true) 
-end
+(1::2::true::nil)

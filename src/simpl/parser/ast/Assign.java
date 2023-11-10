@@ -43,8 +43,15 @@ public class Assign extends BinaryExpr {
         var rhsTr = r.typecheck(E);
         subst.compose(rhsTr.s);
 
-        subst = subst.compose(rhsTr.t.unify(cellTy));
-
+        try {
+            subst = subst.compose(rhsTr.t.unify(cellTy));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), r.toString(), cellTy.toString(), rhsTr.t.toString());
+            throw new TypeError(errorMessage);
+        }
         return TypeResult.of(subst, Type.UNIT);
 
     }

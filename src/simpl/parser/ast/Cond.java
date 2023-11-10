@@ -36,8 +36,28 @@ public class Cond extends Expr {
         var e2Ty = subst.apply(e2Tr.t);
         var e3Ty = subst.apply(e3Tr.t);
 
-        subst = subst.compose(e1Ty.unify(Type.BOOL));
-        subst = subst.compose(e2Ty.unify(e3Ty));
+        // type error catch for e1
+        try {
+            subst = subst.compose(e1Ty.unify(Type.BOOL));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type 'bool', but found '%s'.",
+                    this.toString(), e1.toString(), e1Ty);
+            throw new TypeError(errorMessage);
+        }
+
+        // type error catch for e2
+        try {
+            subst = subst.compose(e2Ty.unify(e3Ty));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible types in %s.%n"
+                            + "Expected the same type for expressions %s and %s, but found '%s' and '%s' respectively.",
+                    this.toString(), e2.toString(), e3.toString(), e2Ty, e3Ty);
+            throw new TypeError(errorMessage);
+        }
+
         e2Ty = subst.apply(e2Ty);
         return TypeResult.of(subst, e2Ty);
     }

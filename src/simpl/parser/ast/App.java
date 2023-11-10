@@ -37,7 +37,15 @@ public class App extends BinaryExpr {
 
         if (e1Ty instanceof ArrowType) {
             var paramTy = ((ArrowType) e1Ty).t1;
-            subst = subst.compose(paramTy.unify(e2Ty));
+            try {
+                subst = subst.compose(paramTy.unify(e2Ty));
+            } catch (TypeError error) {
+                String errorMessage = String.format(
+                        "Type Error: Incompatible type in %s.%n"
+                                + "Expected expression %s to have type '%s', but found '%s'.",
+                        this.toString(), r.toString(), paramTy.toString(), e2Ty.toString());
+                throw new TypeError(errorMessage);
+            }
             var resTy = subst.apply(((ArrowType) e1Ty).t2);
             return TypeResult.of(subst, resTy);
         } else if (e1Ty instanceof TypeVar) {

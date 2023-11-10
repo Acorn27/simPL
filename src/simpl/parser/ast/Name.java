@@ -28,7 +28,6 @@ public class Name extends Expr {
         if (ty == null) {
             throw new TypeError(String.format("Type of symbol %s not found", x));
         }
-        // emtpy environment + type ty
         return TypeResult.of(ty);
     }
 
@@ -37,8 +36,7 @@ public class Name extends Expr {
         var val = s.E.get(x);
         if (val == null) {
             throw new RuntimeError(String.format("Value of symbol %s not found", x));
-        }
-        if (val instanceof RecValue) {
+        } else if (val instanceof RecValue) {
             var rec = new Rec(x, ((RecValue) val).e);
             return rec.eval(State.of(((RecValue) val).E, s.M, s.p));
         }

@@ -30,7 +30,16 @@ public class Cons extends BinaryExpr {
         var listTy = subst.apply(listTr.t);
         var elemTy = subst.apply(elemTr.t);
 
-        subst = subst.compose(listTy.unify(new ListType(elemTy)));
+        try {
+            subst = subst.compose(listTy.unify(new ListType(elemTy)));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), r.toString(), elemTy.toString(), listTy.toString());
+            throw new TypeError(errorMessage);
+        }
+
         listTy = subst.apply(listTy);
         return TypeResult.of(subst, listTy);
     }
