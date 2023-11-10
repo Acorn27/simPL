@@ -26,13 +26,15 @@ public class Loop extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        // assume that pred is bool
         var predTr = e1.typecheck(E);
-        var subst = predTr.s.compose(predTr.t.unify(Type.BOOL));
-
         var bodyTr = e2.typecheck(E);
-        subst = subst.compose(bodyTr.s);
-        subst = subst.compose(bodyTr.t.unify(Type.UNIT));
+        var subst = predTr.s.compose(bodyTr.s);
+
+        var predTy = subst.apply(predTr.t);
+        var bodyTy = subst.apply(bodyTr.t);
+
+        subst = subst.compose(predTy.unify(Type.BOOL));
+        subst = subst.compose(bodyTy.unify(Type.UNIT));
 
         return TypeResult.of(subst, Type.UNIT);
     }

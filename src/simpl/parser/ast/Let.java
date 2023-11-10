@@ -26,15 +26,15 @@ public class Let extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // type check e1
+
         var e1Tr = e1.typecheck(E);
 
-        // type check e2 under e1 of type e1Tr.t
+        // let polymorphism
         var funTr = e2.typecheck(TypeEnv.of(E, x, e1Tr.t));
 
-        // combine constraint
         var subst = e1Tr.s.compose(funTr.s);
         var funTy = subst.apply(funTr.t);
+
         return TypeResult.of(subst, funTy);
     }
 

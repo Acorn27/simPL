@@ -14,13 +14,13 @@ public abstract class ArithExpr extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
+
         var lhsTr = l.typecheck(E);
         var rhsTr = r.typecheck(E);
         var subst = lhsTr.s.compose(rhsTr.s);
         var lhsTy = subst.apply(lhsTr.t);
         var rhsTy = subst.apply(rhsTr.t);
 
-        // infer type result
         subst = subst.compose(lhsTy.unify(Type.INT));
         subst = subst.compose(rhsTy.unify(Type.INT));
         return TypeResult.of(subst, Type.INT);

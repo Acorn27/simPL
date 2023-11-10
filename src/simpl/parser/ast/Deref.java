@@ -26,7 +26,6 @@ public class Deref extends UnaryExpr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var refTr = e.typecheck(E);
         if (refTr.t instanceof RefType) {
-            // return type that reftype reference to
             return TypeResult.of(refTr.s, ((RefType) refTr.t).t);
         } else if (refTr.t instanceof TypeVar) {
             var cellTv = new TypeVar(true);

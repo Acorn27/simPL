@@ -28,20 +28,14 @@ public class Cond extends Expr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
         var e1Tr = e1.typecheck(E);
-        var subst = e1Tr.s;
-        var newE = e1Tr.s.compose(E);
-        var e2Tr = e2.typecheck(newE);
-        subst = subst.compose(e2Tr.s);
-        newE = e2Tr.s.compose(newE);
-        var e3Tr = e3.typecheck(newE);
-        subst = subst.compose(e3Tr.s);
+        var e2Tr = e2.typecheck(E);
+        var e3Tr = e3.typecheck(E);
+        var subst = e1Tr.s.compose(e2Tr.s.compose(e3Tr.s));
 
-        // consistent
         var e1Ty = subst.apply(e1Tr.t);
         var e2Ty = subst.apply(e2Tr.t);
         var e3Ty = subst.apply(e3Tr.t);
 
-        // unify
         subst = subst.compose(e1Ty.unify(Type.BOOL));
         subst = subst.compose(e2Ty.unify(e3Ty));
         e2Ty = subst.apply(e2Ty);

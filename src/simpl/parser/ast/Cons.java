@@ -24,7 +24,6 @@ public class Cons extends BinaryExpr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        // boiler plate
         var elemTr = l.typecheck(E);
         var listTr = r.typecheck(E);
         var subst = listTr.s.compose(elemTr.s);

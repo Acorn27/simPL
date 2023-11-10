@@ -28,6 +28,7 @@ public abstract class EqExpr extends BinaryExpr {
         subst = subst.compose(lhsTy.unify(rhsTy));
         lhsTy = subst.apply(lhsTy);
         rhsTy = subst.apply(rhsTy);
+
         if (!(lhsTy.isEqualityType())) {
             throw new TypeError("lhs is not equality type");
         }

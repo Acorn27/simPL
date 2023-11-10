@@ -29,10 +29,8 @@ public class Fn extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        // define new type variable for function parameter
         var paramTv = new TypeVar(true);
 
-        // infer function's type in new enviroment
         var funTr = e.typecheck(TypeEnv.of(E, x, paramTv));
 
         var paramTy = funTr.s.apply(paramTv);
