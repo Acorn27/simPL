@@ -20,13 +20,13 @@ public class succ extends FunValue {
 
             @Override
             public TypeResult typecheck(TypeEnv E) throws TypeError {
-                // can't type check alone since we are missing argument type
-                return TypeResult.of(new TypeVar(true));
+                return null;
             }
 
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
+                // extra caution
                 if (!(paramValue instanceof IntValue)) {
                     throw new RuntimeError("Parameter is not an integer value");
                 }

@@ -21,22 +21,18 @@ public class pred extends FunValue {
 
             @Override
             public TypeResult typecheck(TypeEnv E) throws TypeError {
-                // can't type check alone since we need argument type
-                return TypeResult.of(new TypeVar(true));
+                return null;
             }
 
             public Value eval(State s) throws RuntimeError {
 
+                // extra caution
                 var paramValue = s.E.get(Symbol.symbol("x"));
                 if (!(paramValue instanceof IntValue)) {
                     throw new RuntimeError("Parameter is not an integer value");
                 }
-                // can it go negative? => no, as example show in class
                 int res = ((IntValue) paramValue).n - 1;
-                if (res < 0) {
-                    res = 0;
-                }
-                return new IntValue(res);
+                return new IntValue(res < 0 ? 0 : res);
             }
         });
     }

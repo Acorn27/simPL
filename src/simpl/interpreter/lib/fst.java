@@ -25,16 +25,17 @@ public class fst extends FunValue {
             @Override
             public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-                // can't type check alone since we need argument type
-                return TypeResult.of(new TypeVar(true));
+                return null;
             }
 
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
+                // extra caution
                 if (!(paramValue instanceof PairValue)) {
                     throw new RuntimeError("Parameter is not a pair value");
                 }
+
                 return ((PairValue) paramValue).v1;
             }
 

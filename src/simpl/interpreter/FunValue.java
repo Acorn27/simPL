@@ -9,7 +9,6 @@ public class FunValue extends Value {
     public final Symbol x;
     public final Expr e;
 
-    // constructor
     public FunValue(Env E, Symbol x, Expr e) {
         this.E = E;
         this.x = x;

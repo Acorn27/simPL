@@ -44,6 +44,6 @@ public class Deref extends UnaryExpr {
         if (!(refVal instanceof RefValue)) {
             throw new RuntimeError("not a reference");
         }
-        return s.M.read(((RefValue) refVal).p);
+        return s.M.get(((RefValue) refVal).p);
     }
 }

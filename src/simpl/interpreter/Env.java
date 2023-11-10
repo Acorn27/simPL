@@ -2,7 +2,6 @@ package simpl.interpreter;
 
 import simpl.parser.Symbol;
 
-// similar to typeEnv but for value
 public class Env {
 
     private final Env E;
