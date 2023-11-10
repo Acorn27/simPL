@@ -60,7 +60,9 @@ public class Assign extends BinaryExpr {
     public Value eval(State s) throws RuntimeError {
         var refVal = l.eval(s);
         if (!(refVal instanceof RefValue)) {
-            throw new RuntimeError("lhs not a reference");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an ref value.",
+                    l.toString());
+            throw new RuntimeError(errorMessage);
         }
         var assignVal = r.eval(s);
         s.M.put(((RefValue) refVal).p, assignVal);

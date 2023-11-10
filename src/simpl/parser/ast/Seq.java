@@ -22,7 +22,16 @@ public class Seq extends BinaryExpr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var exp1Tr = l.typecheck(E);
         var subst = exp1Tr.s;
-        subst = subst.compose(exp1Tr.t.unify(Type.UNIT));
+
+        try {
+            subst = subst.compose(exp1Tr.t.unify(Type.UNIT));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), l.toString(), Type.UNIT.toString(), exp1Tr.t.toString());
+            throw new TypeError(errorMessage);
+        }
 
         var exp2Tr = r.typecheck(E);
         subst = subst.compose(exp2Tr.s);

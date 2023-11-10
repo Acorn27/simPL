@@ -22,8 +22,25 @@ public abstract class RelExpr extends BinaryExpr {
         var lhsTy = subst.apply(lhsTr.t);
         var rhsTy = subst.apply(rhsTr.t);
 
-        subst = subst.compose(lhsTy.unify(Type.INT));
-        subst = subst.compose(rhsTy.unify(Type.INT));
+        try {
+            subst = subst.compose(lhsTy.unify(Type.INT));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), l.toString(), Type.INT.toString(), lhsTy.toString());
+            throw new TypeError(errorMessage);
+        }
+
+        try {
+            subst = subst.compose(rhsTy.unify(Type.INT));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), r.toString(), Type.INT.toString(), rhsTy.toString());
+            throw new TypeError(errorMessage);
+        }
 
         return TypeResult.of(subst, Type.BOOL);
     }

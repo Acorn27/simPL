@@ -19,11 +19,15 @@ public class Add extends ArithExpr {
     public Value eval(State s) throws RuntimeError {
         var v1 = l.eval(s);
         if (!(v1 instanceof IntValue)) {
-            throw new RuntimeError("Lhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
+                    l.toString());
+            throw new RuntimeError(errorMessage);
         }
         var v2 = r.eval(s);
         if (!(v2 instanceof IntValue)) {
-            throw new RuntimeError("Rhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
+                    r.toString());
+            throw new RuntimeError(errorMessage);
         }
         return new IntValue(((IntValue) v1).n + ((IntValue) v2).n);
     }
