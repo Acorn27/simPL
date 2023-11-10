@@ -5,6 +5,7 @@ import simpl.interpreter.IntValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
 import simpl.interpreter.Value;
+import simpl.typing.TypeError;
 
 public class Greater extends RelExpr {
 
@@ -20,11 +21,15 @@ public class Greater extends RelExpr {
     public Value eval(State s) throws RuntimeError {
         var v1 = l.eval(s);
         if (!(v1 instanceof IntValue)) {
-            throw new RuntimeError("lhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                    l.toString());
+            throw new RuntimeError(errorMessage);
         }
         var v2 = r.eval(s);
         if (!(v2 instanceof IntValue)) {
-            throw new RuntimeError("rhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                    r.toString());
+            throw new RuntimeError(errorMessage);
         }
         return new BoolValue(((IntValue) v1).n > ((IntValue) v2).n);
     }

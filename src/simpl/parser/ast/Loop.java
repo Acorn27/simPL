@@ -26,15 +26,32 @@ public class Loop extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        var predTr = e1.typecheck(E);
-        var bodyTr = e2.typecheck(E);
-        var subst = predTr.s.compose(bodyTr.s);
+        var e1Tr = e1.typecheck(E);
+        var e2Tr = e2.typecheck(E);
+        var subst = e1Tr.s.compose(e2Tr.s);
 
-        var predTy = subst.apply(predTr.t);
-        var bodyTy = subst.apply(bodyTr.t);
+        var e1Ty = subst.apply(e1Tr.t);
+        var e2Ty = subst.apply(e2Tr.t);
 
-        subst = subst.compose(predTy.unify(Type.BOOL));
-        subst = subst.compose(bodyTy.unify(Type.UNIT));
+        try {
+            subst = subst.compose(e1Ty.unify(Type.BOOL));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), e1.toString(), Type.BOOL, e1Ty);
+            throw new TypeError(errorMessage);
+        }
+
+        try {
+            subst = subst.compose(e2Ty.unify(Type.UNIT));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), e2.toString(), Type.UNIT, e2Ty);
+            throw new TypeError(errorMessage);
+        }
 
         return TypeResult.of(subst, Type.UNIT);
     }

@@ -23,7 +23,16 @@ public class Neg extends UnaryExpr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var expTr = e.typecheck(E);
-        var subst = expTr.s.compose(expTr.t.unify(Type.INT));
+        var subst = expTr.s;
+        try {
+            subst = subst.compose(expTr.t.unify(Type.INT));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), e.toString(), Type.INT.toString(), expTr.t.toString());
+            throw new TypeError(errorMessage);
+        }
         return TypeResult.of(subst, Type.INT);
     }
 
@@ -31,7 +40,9 @@ public class Neg extends UnaryExpr {
     public Value eval(State s) throws RuntimeError {
         var val = e.eval(s);
         if (!(val instanceof IntValue)) {
-            throw new RuntimeError("not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                    e.toString());
+            throw new RuntimeError(errorMessage);
         }
         return new IntValue(-((IntValue) val).n);
     }

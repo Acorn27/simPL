@@ -30,17 +30,13 @@ public class Rec extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
-        // define new type var for parameter
         var recTv = new TypeVar(false);
 
-        // infer type of body under new enviroment
-        var resTr = e.typecheck(TypeEnv.of(E, x, recTv));
+        var eTr = e.typecheck(TypeEnv.of(E, x, recTv));
 
-        // adding constraint
-        var subst = resTr.s.compose(recTv.unify(resTr.t));
+        var subst = eTr.s.compose(recTv.unify(eTr.t));
 
-        // infer type
-        var resTy = subst.apply(resTr.t);
+        var resTy = subst.apply(eTr.t);
         return TypeResult.of(subst, resTy);
     }
 

@@ -23,7 +23,18 @@ public class Not extends UnaryExpr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var expTr = e.typecheck(E);
-        var subst = expTr.s.compose(expTr.t.unify(Type.BOOL));
+        var subst = expTr.s;
+
+        try {
+            subst = expTr.s.compose(expTr.t.unify(Type.BOOL));
+        } catch (TypeError error) {
+            String errorMessage = String.format(
+                    "Type Error: Incompatible type in %s.%n"
+                            + "Expected expression %s to have type '%s', but found '%s'.",
+                    this.toString(), e.toString(), Type.BOOL.toString(), expTr.t.toString());
+            throw new TypeError(errorMessage);
+        }
+
         return TypeResult.of(subst, Type.BOOL);
     }
 
@@ -31,7 +42,9 @@ public class Not extends UnaryExpr {
     public Value eval(State s) throws RuntimeError {
         var val = e.eval(s);
         if (!(val instanceof BoolValue)) {
-            throw new RuntimeError("not a boolean value");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an bool value.",
+                    e.toString());
+            throw new RuntimeError(errorMessage);
         }
         return new BoolValue(!((BoolValue) val).b);
     }

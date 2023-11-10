@@ -36,7 +36,7 @@ public class Cons extends BinaryExpr {
             String errorMessage = String.format(
                     "Type Error: Incompatible type in %s.%n"
                             + "Expected expression %s to have type '%s', but found '%s'.",
-                    this.toString(), r.toString(), elemTy.toString(), listTy.toString());
+                    this.toString(), r.toString(), (new ListType(elemTy)).toString(), listTy.toString());
             throw new TypeError(errorMessage);
         }
 

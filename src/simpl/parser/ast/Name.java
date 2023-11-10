@@ -26,9 +26,10 @@ public class Name extends Expr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var ty = E.get(x);
         if (ty == null) {
-            throw new TypeError(String.format("Type of symbol %s not found", x));
+            throw new TypeError(String.format("Type of symbol %s not found", x.toString()));
+        } else {
+            return TypeResult.of(ty);
         }
-        return TypeResult.of(ty);
     }
 
     @Override

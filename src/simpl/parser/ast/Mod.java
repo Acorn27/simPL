@@ -19,15 +19,20 @@ public class Mod extends ArithExpr {
     public Value eval(State s) throws RuntimeError {
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof IntValue)) {
-            throw new RuntimeError("lhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                    l.toString());
+            throw new RuntimeError(errorMessage);
         }
         var rhsVal = r.eval(s);
         if (!(rhsVal instanceof IntValue)) {
-            throw new RuntimeError("rhs is not an integer");
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                    r.toString());
+            throw new RuntimeError(errorMessage);
         }
 
         if (((IntValue) rhsVal).n == 0) {
-            throw new RuntimeError("division by 0");
+            String errorMessage = String.format("Runtime Error: Division by zero in %s.", this.toString());
+            throw new RuntimeError(errorMessage);
         }
 
         return new IntValue(((IntValue) lhsVal).n % ((IntValue) rhsVal).n);

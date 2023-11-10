@@ -29,7 +29,6 @@ public class Let extends Expr {
 
         var e1Tr = e1.typecheck(E);
 
-        // let polymorphism
         var funTr = e2.typecheck(TypeEnv.of(E, x, e1Tr.t));
 
         var subst = e1Tr.s.compose(funTr.s);
