@@ -4,9 +4,9 @@ import simpl.parser.Symbol;
 
 public class Env {
 
-    private final Env E;
+    public final Env E;
     private final Symbol x;
-    private final Value v;
+    public final Value v;
 
     private Env() {
         E = null;
@@ -22,6 +22,10 @@ public class Env {
         public Env clone() {
             return this;
         }
+
+        public Value getVal() {
+            return null;
+        }
     };
 
     public Env(Env E, Symbol x, Value v) {
@@ -36,6 +40,10 @@ public class Env {
         } else {
             return E.get(y);
         }
+    }
+
+    public Value getVal() {
+        return v;
     }
 
     public Env clone() {

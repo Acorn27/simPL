@@ -2,7 +2,7 @@ package simpl.interpreter;
 
 public class RefValue extends Value {
 
-    public final int p;
+    public int p;
 
     public RefValue(int p) {
         this.p = p;

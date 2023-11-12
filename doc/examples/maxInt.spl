@@ -1,1 +1,13 @@
-let x=3 in 4 end;2
+let a = ref 0 in
+    let a = ref 10 in
+        let a = ref 20 in
+            let a = ref 30 in 
+                let a = ref 40 in
+                    let a = ref 50 in
+                        !a
+                    end
+                end
+            end
+        end
+    end
+end
