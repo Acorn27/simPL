@@ -4,7 +4,7 @@ public class State {
 
     public final Env E;
     public final Mem M;
-    public final Int p;
+    public Int p;
 
     protected State(Env E, Mem M, Int p) {
         this.E = E;
