@@ -15,9 +15,6 @@ public class Interpreter {
     public void run(String filename) {
         try (InputStream inp = new FileInputStream(filename)) {
 
-            // debug
-            // Mem.memorySize = 10;
-
             Parser parser = new Parser(inp);
             java_cup.runtime.Symbol parseTree = parser.parse();
             Expr program = (Expr) parseTree.value;
@@ -47,7 +44,7 @@ public class Interpreter {
 
     public static void main(String[] args) {
         // interpret(args[1]);
-        // interpret("doc/examples/maxInt.spl");
+        interpret("doc/examples/GC.spl");
         // interpret("doc/examples/plus.spl");
         // interpret("doc/examples/factorial.spl");
         // interpret("doc/examples/gcd1.spl");
