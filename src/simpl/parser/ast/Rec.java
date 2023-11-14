@@ -30,6 +30,7 @@ public class Rec extends Expr {
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
 
+        // true or false???
         var recTv = new TypeVar(false);
 
         var eTr = e.typecheck(TypeEnv.of(E, x, recTv));
@@ -38,6 +39,7 @@ public class Rec extends Expr {
 
         var resTy = subst.apply(eTr.t);
         return TypeResult.of(subst, resTy);
+        
     }
 
     @Override

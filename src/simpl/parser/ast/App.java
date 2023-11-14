@@ -62,7 +62,7 @@ public class App extends BinaryExpr {
         // evaluate left hand side and check if it is a function value
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof FunValue)) {
-            throw new RuntimeError("Lhs can not be evaluated to a function value");
+            throw new RuntimeError(l.toString() + "can not be evaluated to a function value");
         }
         // type cast to func value
         var fnVal = (FunValue) lhsVal;

@@ -44,7 +44,7 @@ public class Interpreter {
 
     public static void main(String[] args) {
         // interpret(args[1]);
-        // interpret("doc/examples/playGround.spl");
+        interpret("doc/examples/playGround.spl");
         // interpret("doc/examples/GC.spl");
         // interpret("doc/examples/plus.spl");
         // interpret("doc/examples/factorial.spl");
