@@ -2,6 +2,7 @@ package simpl.parser.ast;
 
 import simpl.interpreter.Env;
 import simpl.interpreter.FunValue;
+import simpl.interpreter.PairValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
 import simpl.interpreter.Value;
@@ -69,6 +70,10 @@ public class App extends BinaryExpr {
         // then, evaluate argument
         var argVal = r.eval(s);
 
+        if (true && (l instanceof Name) && (argVal instanceof PairValue)) {
+            System.out.println(String.format("lhs: %s, rhs: %s", l.toString(), argVal.toString()));
+        }
+        
         // evaluate function body in a new environmet
         return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, argVal), s.M, s.p));
     }
