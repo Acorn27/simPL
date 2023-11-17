@@ -1,3 +1,1 @@
-let id = fn x => x + 1 in
-id 3
-end
+succ (9/0)

@@ -27,13 +27,15 @@ public class pred extends FunValue {
 
             public Value eval(State s) throws RuntimeError {
 
-                // extra caution
                 var paramValue = s.E.get(Symbol.symbol("x"));
+                // if this is a thunk, then evaluate it
                 if (paramValue instanceof ThunkValue) {
                     paramValue = ((ThunkValue) paramValue).eval();
                 }
+                // extra caution
                 if (!(paramValue instanceof IntValue)) {
-                    throw new RuntimeError("Parameter is not an integer value");
+                    throw new RuntimeError(
+                            "Runtime Error: Parameter passed to function \"pred\" can not be evaluated to an integer value");
                 }
                 int res = ((IntValue) paramValue).n - 1;
                 return new IntValue(res < 0 ? 0 : res);

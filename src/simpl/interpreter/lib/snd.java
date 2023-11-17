@@ -28,13 +28,15 @@ public class snd extends FunValue {
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
-                // extra caution
+
+                // if this is thunk, evaluate it first
                 if (paramValue instanceof ThunkValue) {
                     paramValue = ((ThunkValue) paramValue).eval();
                 }
-
+                // extra caution
                 if (!(paramValue instanceof PairValue)) {
-                    throw new RuntimeError("Parameter is not a pair value");
+                    throw new RuntimeError(
+                            "Runtime Error: Parameter passed to function \"snd\" can not be evaluated to a pair value");
                 }
                 return ((PairValue) paramValue).v2;
             }

@@ -27,12 +27,15 @@ public class succ extends FunValue {
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
-                // extra caution
+
+                // if this is a thunk, then evaluate it
                 if (paramValue instanceof ThunkValue) {
                     paramValue = ((ThunkValue) paramValue).eval();
                 }
+                // extra caution
                 if (!(paramValue instanceof IntValue)) {
-                    throw new RuntimeError("Parameter is not an integer value");
+                    throw new RuntimeError(
+                            "Runtime Error: Parameter passed to function \"succ\" can not be evaluated to an integer value");
                 }
                 return new IntValue(((IntValue) paramValue).n + 1);
             }

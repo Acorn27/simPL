@@ -30,13 +30,15 @@ public class hd extends FunValue {
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
-                // extra caution
 
+                // if this is thunk, evaluate it first
                 if (paramValue instanceof ThunkValue) {
                     paramValue = ((ThunkValue) paramValue).eval();
                 }
+                // extra caution
                 if (!(paramValue instanceof ConsValue)) {
-                    throw new RuntimeError("Parameter not a list value");
+                    throw new RuntimeError(
+                            "Runtime Error: Parameter passed to function \"hd\" can not be evaluated to a list value");
                 }
                 return ((ConsValue) paramValue).v1;
             }

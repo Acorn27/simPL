@@ -29,12 +29,14 @@ public class tl extends FunValue {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
 
+                // if this is a thunk, then evaluated it
                 if (paramValue instanceof ThunkValue) {
                     paramValue = ((ThunkValue) paramValue).eval();
                 }
                 // extra caution
                 if (!(paramValue instanceof ConsValue)) {
-                    throw new RuntimeError("Parameter not a list value");
+                    throw new RuntimeError(
+                            "Runtime Error: Parameter passed to function \"tl\" can not be evaluated to a list value");
                 }
                 return ((ConsValue) paramValue).v2;
             }
