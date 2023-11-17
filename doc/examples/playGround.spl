@@ -1,3 +1,3 @@
-let fac = rec f => fn p => if fst p = 1 then snd p else f (fst p - 1,(fst p) * (snd p))
-in fac (3,1)
+let id = fn x => x + 1 in
+id 3
 end

@@ -5,6 +5,7 @@ import simpl.interpreter.FunValue;
 import simpl.interpreter.PairValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
+import simpl.interpreter.ThunkValue;
 import simpl.interpreter.Value;
 import simpl.interpreter.pcf.iszero;
 import simpl.parser.Symbol;
@@ -68,14 +69,11 @@ public class App extends BinaryExpr {
         // type cast to func value
         var fnVal = (FunValue) lhsVal;
         // then, evaluate argument
-        var argVal = r.eval(s);
+        // var argVal = r.eval(s);
 
-        // if (true && (l instanceof Name) && (argVal instanceof PairValue)) {
-        // System.out.println(String.format("lhs: %s, rhs: %s", l.toString(),
-        // argVal.toString()));
-        // }
+        var thunk = new ThunkValue(s, r);
 
         // evaluate function body in a new environmet
-        return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, argVal), s.M, s.p));
+        return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, thunk), s.M, s.p));
     }
 }

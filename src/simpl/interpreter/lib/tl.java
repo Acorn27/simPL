@@ -5,6 +5,7 @@ import simpl.interpreter.Env;
 import simpl.interpreter.FunValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
+import simpl.interpreter.ThunkValue;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
@@ -27,6 +28,10 @@ public class tl extends FunValue {
             public Value eval(State s) throws RuntimeError {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
+
+                if (paramValue instanceof ThunkValue) {
+                    paramValue = ((ThunkValue) paramValue).eval();
+                }
                 // extra caution
                 if (!(paramValue instanceof ConsValue)) {
                     throw new RuntimeError("Parameter not a list value");

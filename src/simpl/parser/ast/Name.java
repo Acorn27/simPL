@@ -9,6 +9,7 @@ import simpl.typing.Type;
 import simpl.typing.TypeEnv;
 import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
+import simpl.interpreter.ThunkValue;
 
 public class Name extends Expr {
 
@@ -40,6 +41,8 @@ public class Name extends Expr {
         } else if (val instanceof RecValue) {
             var rec = new Rec(x, ((RecValue) val).e);
             return rec.eval(State.of(((RecValue) val).E, s.M, s.p));
+        } else if (val instanceof ThunkValue) {
+            return ((ThunkValue) val).eval();
         }
         return val;
     }

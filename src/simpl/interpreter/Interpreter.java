@@ -67,14 +67,14 @@ public class Interpreter {
         // interpret("doc2/gcd2.spl");
         // interpret("doc2/letpoly.spl");
         // interpret("doc2/map.spl");
-        interpret("doc2/max.spl");
+        // interpret("doc2/max.spl");
         // interpret("doc2/pcf.even.spl");
         // interpret("doc2/pcf.factorial.spl");
         // interpret("doc2/pcf.fibonacci.spl");
         // interpret("doc2/pcf.minus.spl");
         // interpret("doc2/pcf.sum.spl");
         // interpret("doc2/plus.spl");
-        // interpret("doc2/sum.spl");
+        interpret("doc2/sum.spl");
 
     }
 }

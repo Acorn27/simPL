@@ -14,6 +14,8 @@ import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
 import simpl.typing.TypeVar;
 
+import simpl.interpreter.ThunkValue;
+
 public class hd extends FunValue {
 
     public hd() {
@@ -29,6 +31,10 @@ public class hd extends FunValue {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
                 // extra caution
+
+                if (paramValue instanceof ThunkValue) {
+                    paramValue = ((ThunkValue) paramValue).eval();
+                }
                 if (!(paramValue instanceof ConsValue)) {
                     throw new RuntimeError("Parameter not a list value");
                 }
