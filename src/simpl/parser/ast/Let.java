@@ -1,8 +1,10 @@
 package simpl.parser.ast;
 
 import simpl.interpreter.Env;
+import simpl.interpreter.Features;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
+import simpl.interpreter.ThunkValue;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.typing.TypeEnv;
@@ -39,9 +41,14 @@ public class Let extends Expr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // evaluate e1
-        var v1 = e1.eval(s);
-        // evaluate e2
-        return e2.eval(State.of(Env.of(s.E, x, v1), s.M, s.p));
+
+        // if lazy evaluation is on
+        if (Features.LAZY) {
+            var thunk = new ThunkValue(s, e1);
+            return e2.eval(State.of(Env.of(s.E, x, thunk), s.M, s.p));
+        } else {
+            var v1 = e1.eval(s);
+            return e2.eval(State.of(Env.of(s.E, x, v1), s.M, s.p));
+        }
     }
 }

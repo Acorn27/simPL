@@ -4,8 +4,10 @@ public class Features {
 
     // Whether to use garbage collection
     public static final boolean GC = true;
-
     private static int memorySize = 100;
+
+    // Whether to use lazy evaluation
+    public static final boolean LAZY = true;
 
     // public function to set memory size
     public void setMem(int size) throws RuntimeError {
@@ -24,7 +26,4 @@ public class Features {
             throw new RuntimeError("Error: Cannot access memory size when garbage collection is disabled.");
         }
     }
-
-    // Whether to use lazy evaluation
-    public static final boolean LAZY = false;
 }

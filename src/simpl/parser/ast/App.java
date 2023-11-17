@@ -1,6 +1,9 @@
 package simpl.parser.ast;
 
+import javax.xml.catalog.CatalogFeatures.Feature;
+
 import simpl.interpreter.Env;
+import simpl.interpreter.Features;
 import simpl.interpreter.FunValue;
 import simpl.interpreter.PairValue;
 import simpl.interpreter.RuntimeError;
@@ -61,19 +64,21 @@ public class App extends BinaryExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
+
         // evaluate left hand side and check if it is a function value
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof FunValue)) {
-            throw new RuntimeError(l.toString() + "can not be evaluated to a function value");
+            throw new RuntimeError("Runtime error: " + l.toString() + "can not be evaluated to a function value");
         }
         // type cast to func value
         var fnVal = (FunValue) lhsVal;
-        // then, evaluate argument
-        // var argVal = r.eval(s);
 
-        var thunk = new ThunkValue(s, r);
-
-        // evaluate function body in a new environmet
-        return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, thunk), s.M, s.p));
+        if (Features.LAZY) {
+            var thunk = new ThunkValue(s, r);
+            return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, thunk), s.M, s.p));
+        } else {
+            var argVal = r.eval(s);
+            return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, argVal), s.M, s.p));
+        }
     }
 }
