@@ -6,6 +6,7 @@ import simpl.interpreter.FunValue;
 import simpl.interpreter.IntValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
+import simpl.interpreter.ThunkValue;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
@@ -28,6 +29,9 @@ public class pred extends FunValue {
 
                 // extra caution
                 var paramValue = s.E.get(Symbol.symbol("x"));
+                if (paramValue instanceof ThunkValue) {
+                    paramValue = ((ThunkValue) paramValue).eval();
+                }
                 if (!(paramValue instanceof IntValue)) {
                     throw new RuntimeError("Parameter is not an integer value");
                 }

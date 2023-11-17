@@ -62,18 +62,18 @@ public class Interpreter {
         // interpret("doc/examples/pcf.lists.spl");
         // interpret("doc/examples/true.spl");
 
-        // interpret("doc2/factorial.spl");
-        // interpret("doc2/gcd1.spl");
-        // interpret("doc2/gcd2.spl");
-        // interpret("doc2/letpoly.spl");
-        // interpret("doc2/map.spl");
-        // interpret("doc2/max.spl");
-        // interpret("doc2/pcf.even.spl");
-        // interpret("doc2/pcf.factorial.spl");
-        // interpret("doc2/pcf.fibonacci.spl");
-        // interpret("doc2/pcf.minus.spl");
-        // interpret("doc2/pcf.sum.spl");
-        // interpret("doc2/plus.spl");
+        interpret("doc2/factorial.spl");
+        interpret("doc2/gcd1.spl");
+        interpret("doc2/gcd2.spl");
+        interpret("doc2/letpoly.spl");
+        interpret("doc2/map.spl");
+        interpret("doc2/max.spl");
+        interpret("doc2/pcf.even.spl");
+        interpret("doc2/pcf.factorial.spl");
+        interpret("doc2/pcf.fibonacci.spl");
+        interpret("doc2/pcf.minus.spl");
+        interpret("doc2/pcf.sum.spl");
+        interpret("doc2/plus.spl");
         interpret("doc2/sum.spl");
 
     }

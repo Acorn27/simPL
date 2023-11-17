@@ -9,6 +9,7 @@ import simpl.interpreter.IntValue;
 import simpl.interpreter.PairValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
+import simpl.interpreter.ThunkValue;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
@@ -32,6 +33,9 @@ public class fst extends FunValue {
 
                 var paramValue = s.E.get(Symbol.symbol("x"));
                 // extra caution
+                if (paramValue instanceof ThunkValue) {
+                    paramValue = ((ThunkValue) paramValue).eval();
+                }
                 if (!(paramValue instanceof PairValue)) {
                     throw new RuntimeError("Parameter is not a pair value");
                 }

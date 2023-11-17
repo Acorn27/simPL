@@ -9,10 +9,12 @@ public class ThunkValue extends Value {
 
     public final State s;
     public final Expr e;
+    private Value v;
 
     public ThunkValue(State s, Expr e) {
         this.s = s;
         this.e = e;
+        this.v = null;
     }
 
     public String toString() {
@@ -25,7 +27,9 @@ public class ThunkValue extends Value {
     }
 
     public Value eval() throws RuntimeError {
-        // System.out.println(String.format("Call eval on thunk with expr = %s", e));
-        return e.eval(s);
+        if (v == null) {
+            v = e.eval(s);
+        }
+        return v;
     }
 }
