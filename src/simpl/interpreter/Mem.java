@@ -21,8 +21,13 @@ public class Mem extends HashMap<Integer, Value> {
 
     public int alloc(State s) throws RuntimeError {
 
+        // System.out.println(String.format("p is %s, mem limit is %s", s.p.get(),
+        // Features.getMem()));
+
         // GC: coppy collection implementation
         if (Features.GC && s.p.get() >= Features.getMem()) {
+
+            // System.out.println("call GC");
 
             // PHASE 1: copy && store in continuous spacce
             // create a second halves to be used an temporary storage
@@ -32,6 +37,11 @@ public class Mem extends HashMap<Integer, Value> {
             // traversing the environment looking for active cell
             while (env != null) {
                 var value = env.getVal();
+
+                // if (value instanceof ThunkValue) {
+                // value = ((ThunkValue) value).eval();
+                // }
+
                 if (value instanceof RefValue) {
                     // write value to temporary storage
                     tempStorage.add(idx, s.M.get(((RefValue) value).p));
@@ -44,8 +54,10 @@ public class Mem extends HashMap<Integer, Value> {
                 env = env.E;
             }
 
+            // System.out.println("Temp storage size is: " + tempStorage.size());
+
             // if all the memory are in used => throw error
-            if (tempStorage.size() >= memorySize) {
+            if (tempStorage.size() >= Features.getMem()) {
                 throw new RuntimeError("Runtime Eror: Running out of memory");
             }
 

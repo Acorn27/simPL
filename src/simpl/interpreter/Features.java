@@ -4,7 +4,7 @@ public class Features {
 
     // Whether to use garbage collection
     public static final boolean GC = true;
-    private static int memorySize = 100;
+    private static int memorySize = 5;
 
     // Whether to use lazy evaluation
     public static final boolean LAZY = true;

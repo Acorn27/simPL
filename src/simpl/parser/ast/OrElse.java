@@ -49,7 +49,7 @@ public class OrElse extends BinaryExpr {
                     this.toString(), r.toString(), Type.BOOL.toString(), e2Ty.toString());
             throw new TypeError(errorMessage);
         }
-        
+
         return TypeResult.of(subst, Type.BOOL);
     }
 
@@ -57,15 +57,19 @@ public class OrElse extends BinaryExpr {
     public Value eval(State s) throws RuntimeError {
         var e1Val = l.eval(s);
         if (!(e1Val instanceof BoolValue)) {
-            throw new RuntimeError(l.toString() + "can not be evaluated to a function value");
+            throw new RuntimeError(l.toString() + "can not be evaluated to a boolean value.");
         }
 
-        var e2Val = r.eval(s);
-        if (!(e2Val instanceof BoolValue)) {
-            throw new RuntimeError(l.toString() + "can not be evaluated to a function value");
+        boolean res;
+        if (((BoolValue) e1Val).b == true) {
+            res = true;
+        } else {
+            var e2Val = r.eval(s);
+            if (!(e2Val instanceof BoolValue)) {
+                throw new RuntimeError(l.toString() + "can not be evaluated to a bolean value");
+            }
+            res = ((BoolValue) e2Val).b;
         }
-
-        boolean res =  ((BoolValue) e1Val).b || ((BoolValue) e2Val).b;
         return new BoolValue(res);
     }
 }

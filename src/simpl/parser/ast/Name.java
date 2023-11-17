@@ -27,7 +27,7 @@ public class Name extends Expr {
     public TypeResult typecheck(TypeEnv E) throws TypeError {
         var ty = E.get(x);
         if (ty == null) {
-            throw new TypeError(String.format("Type of symbol %s not found", x.toString()));
+            throw new TypeError(String.format("Type error: Type of symbol %s not found", x.toString()));
         } else {
             return TypeResult.of(ty);
         }
@@ -37,10 +37,11 @@ public class Name extends Expr {
     public Value eval(State s) throws RuntimeError {
         var val = s.E.get(x);
         if (val == null) {
-            throw new RuntimeError(String.format("Value of symbol %s not found", x));
+            throw new RuntimeError(String.format("Runtime error: Value of symbol %s not found", x.toString()));
         } else if (val instanceof RecValue) {
             var rec = new Rec(x, ((RecValue) val).e);
             return rec.eval(State.of(((RecValue) val).E, s.M, s.p));
+            // if this is a thunk then evaluate it
         } else if (val instanceof ThunkValue) {
             return ((ThunkValue) val).eval();
         }

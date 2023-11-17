@@ -66,7 +66,8 @@ public class Cond extends Expr {
     public Value eval(State s) throws RuntimeError {
         var predVal = e1.eval(s);
         if (!(predVal instanceof BoolValue)) {
-            throw new RuntimeError("predicate is not a boolean");
+            throw new RuntimeError(
+                    String.format("Runtime error: Predicate '%s' can not be evaluated to a bool value", e1.toString()));
         }
         return (((BoolValue) predVal).b) ? e2.eval(s) : e3.eval(s);
     }

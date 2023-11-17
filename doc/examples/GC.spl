@@ -1,10 +1,14 @@
 let a = ref 100 in
     let a1 = ref 101 in
-        let b = ref 2 in () end;
-        let c = ref 3 in () end;
-        let d = ref 4 in () end;
-        let e = ref 5 in () end;
-        let f = ref 6 in () end;
-        !a - !(a1)
+        let a3 = ref 102 in
+            let a4 = ref 103 in
+                let b = ref 2 in () end;
+                let c = ref 3 in () end;
+                let d = ref 4 in () end;
+                let e = ref 5 in () end;
+                let f = ref 6 in () end;
+                !a - !(a1)
+            end
+        end
     end
 end

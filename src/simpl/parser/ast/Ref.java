@@ -28,7 +28,6 @@ public class Ref extends UnaryExpr {
     @Override
     public Value eval(State s) throws RuntimeError {
         var ptr = s.M.alloc(s);
-
         var cellVal = e.eval(s);
         s.M.write(ptr, cellVal);
         return new RefValue(ptr);

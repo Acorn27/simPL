@@ -20,7 +20,7 @@ public class Mul extends ArithExpr {
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof IntValue)) {
             if (!(lhsVal instanceof IntValue)) {
-                String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                         l.toString());
                 throw new RuntimeError(errorMessage);
             }
@@ -28,7 +28,7 @@ public class Mul extends ArithExpr {
         var rhsVal = r.eval(s);
         if (!(rhsVal instanceof IntValue)) {
             if (!(lhsVal instanceof IntValue)) {
-                String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+                String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                         r.toString());
                 throw new RuntimeError(errorMessage);
             }

@@ -4,6 +4,7 @@ import simpl.interpreter.RefValue;
 import simpl.interpreter.RuntimeError;
 import simpl.interpreter.State;
 import simpl.interpreter.Value;
+import simpl.typing.ListType;
 import simpl.typing.RefType;
 import simpl.typing.Substitution;
 import simpl.typing.Type;
@@ -34,14 +35,18 @@ public class Deref extends UnaryExpr {
             subst.apply(cellTv);
             return TypeResult.of(subst, cellTv);
         }
-        throw new TypeError("not a reference");
+        String errorMessage = String.format(
+                "Type Error: Incompatible type in %s.%n" + "Expected expression %s to have type '%s', but found '%s'.",
+                this.toString(), e.toString(), "ref", refTr.t.toString());
+        throw new TypeError(errorMessage);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
         var refVal = e.eval(s);
         if (!(refVal instanceof RefValue)) {
-            throw new RuntimeError("not a reference");
+            throw new RuntimeError(String
+                    .format("Runtime error: Expression %s can not be evaluated to a reference value", e.toString()));
         }
         return s.M.read(((RefValue) refVal).p);
     }

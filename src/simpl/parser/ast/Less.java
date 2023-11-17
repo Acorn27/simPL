@@ -20,13 +20,13 @@ public class Less extends RelExpr {
     public Value eval(State s) throws RuntimeError {
         var v1 = l.eval(s);
         if (!(v1 instanceof IntValue)) {
-            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                     l.toString());
             throw new RuntimeError(errorMessage);
         }
         var v2 = r.eval(s);
         if (!(v2 instanceof IntValue)) {
-            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                     r.toString());
             throw new RuntimeError(errorMessage);
         }

@@ -19,13 +19,13 @@ public class Mod extends ArithExpr {
     public Value eval(State s) throws RuntimeError {
         var lhsVal = l.eval(s);
         if (!(lhsVal instanceof IntValue)) {
-            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                     l.toString());
             throw new RuntimeError(errorMessage);
         }
         var rhsVal = r.eval(s);
         if (!(rhsVal instanceof IntValue)) {
-            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int.",
+            String errorMessage = String.format("Runtime Error: Expression %s can not be evaluate to an int value.",
                     r.toString());
             throw new RuntimeError(errorMessage);
         }

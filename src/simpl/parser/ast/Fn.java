@@ -40,7 +40,6 @@ public class Fn extends Expr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // closure
         return new FunValue(s.E, x, e);
     }
 }

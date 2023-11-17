@@ -60,7 +60,8 @@ public class Loop extends Expr {
     public Value eval(State s) throws RuntimeError {
         var predVal = e1.eval(s);
         if (!(predVal instanceof BoolValue)) {
-            throw new RuntimeError("Predicate can not evaluated to a bool value");
+            throw new RuntimeError(
+                    String.format("Runtime error: Predicate '%s' can not evaluated to a bool value", e1.toString()));
         }
         if (((BoolValue) predVal).b) {
             return new Seq(e2, this).eval(s);
