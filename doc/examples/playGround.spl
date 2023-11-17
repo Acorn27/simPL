@@ -1,1 +1,3 @@
-succ (9/0)
+let id = fn x => fn y => 100 in 
+    id (10/0) (11/0)
+end
