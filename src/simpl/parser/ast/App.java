@@ -70,10 +70,11 @@ public class App extends BinaryExpr {
         // then, evaluate argument
         var argVal = r.eval(s);
 
-        if (true && (l instanceof Name) && (argVal instanceof PairValue)) {
-            System.out.println(String.format("lhs: %s, rhs: %s", l.toString(), argVal.toString()));
-        }
-        
+        // if (true && (l instanceof Name) && (argVal instanceof PairValue)) {
+        // System.out.println(String.format("lhs: %s, rhs: %s", l.toString(),
+        // argVal.toString()));
+        // }
+
         // evaluate function body in a new environmet
         return fnVal.e.eval(State.of(Env.of(fnVal.E, fnVal.x, argVal), s.M, s.p));
     }
