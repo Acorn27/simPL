@@ -83,4 +83,5 @@ e ::= NUM:n {: RESULT = new IntegerLiteral(n.intValue()); :}
     | WHILE e:e1 DO e:e2 {: RESULT = new Loop(e1, e2); :}
     | UNIT {: RESULT = new Unit(); :}
     | LPAREN e:e RPAREN {: RESULT = new Group(e); :}
+    | LET ID:x EQ e:e1 COMMA ID:y EQ e:e2 IN e:e3 END {: RESULT = new LetMR(symbol(x), e1, symbol(y), e2, e3); :}    
     ;

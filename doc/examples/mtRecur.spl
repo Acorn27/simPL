@@ -1,5 +1,6 @@
-let odd = fn x => if x = 1 then true else [even] (n - 1) in
-let even = fn x => if x = 0 then true else odd (n - 1) in 
-even 10
-end
+let 
+    odd = fn x => if x = 0 then true else even (x - 1), 
+    even = fn x => if x = 0 then true else odd (x - 1) 
+in 
+    even 10
 end
