@@ -86,8 +86,6 @@ Whitespace = {LineTerm}|[ \t\f]
     ";"  { return token(SEMI); }
     "("  { return token(LPAREN); }
     ")"  { return token(RPAREN); }
-    "["  { return token(LHALT); }
-    "]"  { return token(RHALT); }
     
     {Identifier} { return token(ID, yytext()); }
     {DecInteger} { return token(NUM, Integer.valueOf(yytext())); }
