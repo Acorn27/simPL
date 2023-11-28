@@ -59,7 +59,7 @@ public class App extends BinaryExpr {
             var resTy = subst.apply(resTv);
             return TypeResult.of(subst, resTy);
         }
-        throw new TypeError("Lhs is not of function type");
+        throw new TypeError("Type error: Lhs is not of function type");
     }
 
     @Override

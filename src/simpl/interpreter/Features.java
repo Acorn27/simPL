@@ -7,7 +7,7 @@ public class Features {
     private static int memorySize = 5;
 
     // Whether to use lazy evaluation
-    public static final boolean LAZY = true;
+    public static final boolean LAZY = false;
 
     // public function to set memory size
     public void setMem(int size) throws RuntimeError {

@@ -1,5 +1,7 @@
 package simpl.parser.ast;
 
+import javax.xml.catalog.CatalogFeatures.Feature;
+
 import simpl.interpreter.Env;
 import simpl.interpreter.Features;
 import simpl.interpreter.FunValue;
@@ -68,10 +70,22 @@ public class LetMR extends Expr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        var e1Val = new FunValue(s.E, x, e1);
-        var e2Val = new FunValue(s.E, y, e2);
 
-        return e3.eval(State.of(Env.of(null, x, null), null, null))
-        return null;
+        var v1 = e1.eval(s);
+        if (!(v1 instanceof FunValue))
+            throw new RuntimeError("v1 is not a function");
+        var v2 = e2.eval(s);
+        if (!(v2 instanceof FunValue))
+            throw new RuntimeError("v2 is not a function");
+
+        // compose mutual enviroment
+        var env = Env.of(Env.of(s.E, x, v1), y, v2);
+
+        // unify to the mutual environment
+        ((FunValue) v1).E = env;
+        ((FunValue) v2).E = env;
+
+        // Evaluate the rest
+        return e3.eval(State.of(env, s.M, s.p));
     }
 }
