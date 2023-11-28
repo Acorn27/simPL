@@ -20,7 +20,7 @@ public class Interpreter {
             Expr program = (Expr) parseTree.value;
 
             // print out type of the evaluated expression
-            System.out.println(program.typecheck(new DefaultTypeEnv()).t);
+            // System.out.println(program.typecheck(new DefaultTypeEnv()).t);
 
             // print out value of evaluated expression
             System.out.println(program.eval(new InitialState()));
@@ -43,9 +43,9 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-        // interpret(args[1]);
+        interpret(args[0]);
         // interpret("doc/examples/playGround.spl");
-        interpret("doc/examples/mtRecur.spl");
+        // interpret("doc/examples/mtRecur.spl");
         // interpret("doc/examples/GC.spl");
         // interpret("doc/examples/plus.spl");
         // interpret("doc/examples/factorial.spl");

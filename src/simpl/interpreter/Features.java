@@ -3,11 +3,11 @@ package simpl.interpreter;
 public class Features {
 
     // Whether to use garbage collection
-    public static final boolean GC = true;
-    private static int memorySize = 5;
+    public static final boolean GC = false;
+    private static int memorySize = 9999;
 
     // Whether to use lazy evaluation
-    public static final boolean LAZY = false;
+    public static final boolean LAZY = true;
 
     // public function to set memory size
     public void setMem(int size) throws RuntimeError {
