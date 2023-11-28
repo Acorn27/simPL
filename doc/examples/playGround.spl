@@ -1,1 +1,7 @@
-false orelse false
+let fact = rec f => fn p => 
+    if (fst p) = 1 then 
+        (snd p) 
+    else 
+        f ((fst p) - 1, (fst p) * (snd p))
+in  fact (10, 1)
+end

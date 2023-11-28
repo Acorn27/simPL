@@ -71,21 +71,21 @@ public class LetMR extends Expr {
     @Override
     public Value eval(State s) throws RuntimeError {
 
-        var v1 = e1.eval(s);
-        if (!(v1 instanceof FunValue))
+        var e1Val = e1.eval(s);
+        if (!(e1Val instanceof FunValue))
             throw new RuntimeError("v1 is not a function");
-        var v2 = e2.eval(s);
-        if (!(v2 instanceof FunValue))
+        var e2Val = e2.eval(s);
+        if (!(e2Val instanceof FunValue))
             throw new RuntimeError("v2 is not a function");
 
         // compose mutual enviroment
-        var env = Env.of(Env.of(s.E, x, v1), y, v2);
+        var newEnv = Env.of(Env.of(s.E, x, e1Val), y, e2Val);
 
         // unify to the mutual environment
-        ((FunValue) v1).E = env;
-        ((FunValue) v2).E = env;
+        ((FunValue) e1Val).E = newEnv;
+        ((FunValue) e2Val).E = newEnv;
 
         // Evaluate the rest
-        return e3.eval(State.of(env, s.M, s.p));
+        return e3.eval(State.of(newEnv, s.M, s.p));
     }
 }
