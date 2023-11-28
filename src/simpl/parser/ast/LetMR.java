@@ -39,7 +39,6 @@ public class LetMR extends Expr {
 
         // asign temporary type to y
         var yTv = new TypeVar(true);
-
         // compose new typpeEnv
         TypeEnv newE = TypeEnv.of(E, y, yTv);
 
@@ -48,7 +47,6 @@ public class LetMR extends Expr {
 
         // update enviroment with type result of x
         newE = TypeEnv.of(newE, x, e1Tr.t);
-
         // type check e2 under new environmet
         var e2Tr = e2.typecheck(newE);
 
@@ -57,9 +55,9 @@ public class LetMR extends Expr {
         subst = subst.compose(e2Tr.s);
         subst = subst.compose(yTv.unify(e2Tr.t));
 
+        // phase 2 of type check
         var e1Ty = subst.apply(e1Tr.t);
         var e2Ty = subst.apply(e2Tr.t);
-
         newE = TypeEnv.of(newE, x, e1Ty);
         newE = TypeEnv.of(newE, y, e2Ty);
 
