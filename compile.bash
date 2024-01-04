@@ -1,1 +1,0 @@
-javac -d bin -cp lib/java-cup-11a-runtime.jar src/simpl/interpreter/*.java src/simpl/interpreter/lib/*.java src/simpl/interpreter/pcf/*.java src/simpl/parser/*.java src/simpl/parser/ast/*.java src/simpl/typing/*.java 

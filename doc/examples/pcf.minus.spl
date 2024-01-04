@@ -3,3 +3,4 @@ let minus = rec m =>
 in
   minus 125 79
 end
+(* ==> 46 *)
